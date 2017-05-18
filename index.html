@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<meta name="description" content="Strategy agency ||| Culture | Technology | Innovation" />
+
+		<meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+		<title>Affix</title>
+
+		<link href="https://fonts.googleapis.com/css?family=Lora|Open+Sans" rel="stylesheet">
+
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+
+			html, body {
+				height: 100%;
+    			background: red; /* For browsers that do not support gradients */
+   	 			background: -webkit-linear-gradient(red, yellow); /* For Safari 5.1 to 6.0 */
+    			background: -o-linear-gradient(blue, purple); /* For Opera 11.1 to 12.0 */
+    			background: -moz-linear-gradient(blue, purple); /* For Firefox 3.6 to 15 */
+    			background: linear-gradient(blue, purple); /* Standard syntax */
+			}
+			}
+
+			.main-container {
+				width: 100%;
+				height: 100%;
+			}
+
+			canvas {
+				display: block;
+				margin: 50px auto;
+			}
+
+			p {
+				position: relative;
+				text-align: center;
+				margin-top: 10px;
+				font-family: monospace;
+			}
+
+			.Title {
+				font-size: 70px;
+				color: #FFF4CB;
+				font-style: bold;
+				font-family: 'Lora', serif;
+				line-height: 50px;
+			    position: absolute;
+			    top: 25px;
+			    left: 25px;
+			}
+
+			.panel {
+				font-size: 15px;
+				color: #FFF4CB;
+				font-style: bold;
+				font-family: 'Open Sans', sans-serif;
+			    position: absolute;
+			    bottom: 25px;
+			    right: 25px;
+			}
+
+		</style>
+
+	</head>
+	<body>
+
+		<div class="main-container">
+
+<center><div class="Title">Affix Agency</div></center>
+
+<center><div class="panel">
+A strategy agency <br> | Technology | Innovation | Culture <br><br> Brokin' Agency is a subsidiary of Affix </div></center>
+
+			<canvas></canvas>
+
+		</div>
+
+		<script>
+
+			/**
+			
+			* Animation by Hakim El Hattab (http://hakim.se)
+			 
+			*/
+
+			(function() {
+
+				var canvas = document.querySelector( 'canvas' ),
+					context = canvas.getContext( '2d' ),
+
+					width = window.innerWidth * 0.7,
+					height = window.innerHeight * 0.7,
+
+					radius = Math.min( width, height ) * 0.5,
+
+					// Number of layers
+					quality = 180,
+
+					// Layer instances
+					layers = [],
+
+					// Width/height of layers
+					layerSize = radius * 0.25,
+
+					// Layers that overlap to create the infinity illusion
+					layerOverlap = Math.round( quality * 0.1 );
+
+				function initialize() {
+
+					for( var i = 0; i < quality; i++ ) {
+						layers.push({
+							x: width/2 + Math.sin( i / quality * 2 * Math.PI ) * ( radius - layerSize ),
+							y: height/2 + Math.cos( i / quality * 2 * Math.PI ) * ( radius - layerSize ),
+							r: ( i / quality ) * Math.PI
+						});
+					}
+
+					resize();
+					update();
+
+				}
+
+				function resize() {
+
+					canvas.width = width;
+					canvas.height = height;
+
+				}
+
+				function update() {
+
+					requestAnimationFrame( update );
+
+					step();
+					clear();
+					paint();
+
+				}
+
+				// Takes a step in the simulation
+				function step () {
+
+					for( var i = 0, len = layers.length; i < len; i++ ) {
+
+						layers[i].r += 0.01;
+
+					}
+
+				}
+
+				// Clears the painting
+				function clear() {
+
+					context.clearRect( 0, 0, canvas.width, canvas.height );
+
+				}
+
+				// Paints the current state
+				function paint() {
+
+					// Number of layers in total
+					var layersLength = layers.length;
+
+					// Draw the overlap layers
+					for( var i = layersLength - layerOverlap, len = layersLength; i < len; i++ ) {
+
+						context.save();
+						context.globalCompositeOperation = 'destination-over';
+						paintLayer( layers[i] );
+						context.restore();
+
+					}
+
+					// Cut out the overflow layers using the first layer as a mask
+					context.save();
+					context.globalCompositeOperation = 'destination-in';
+					paintLayer( layers[0], true );
+					context.restore();
+
+					// // Draw the normal layers underneath the overlap
+					for( var i = 0, len = layersLength; i < len; i++ ) {
+
+						context.save();
+						context.globalCompositeOperation = 'destination-over';
+						paintLayer( layers[i] );
+						context.restore();
+
+					}
+
+				}
+
+				// Pains one layer
+				function paintLayer( layer, mask ) {
+					size = layerSize + ( mask ? 10 : 0 );
+					size2 = size / 2;
+
+					context.translate( layer.x, layer.y );
+					context.rotate( layer.r );
+
+					// No stroke if this is a mask
+					if( !mask ) {
+						context.strokeStyle = '#000';
+						context.lineWidth = 1;
+						context.strokeRect( -size2, -size2, size, size );
+					}
+
+					context.fillStyle = '#fff';
+					context.fillRect( -size2, -size2, size, size );
+
+				}
+
+				/**
+				 * rAF polyfill.
+				 */
+				(function() {
+					var lastTime = 0;
+					var vendors = ['ms', 'moz', 'webkit', 'o'];
+					for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+						window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+						window.cancelAnimationFrame = 
+						  window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+					}
+
+					if (!window.requestAnimationFrame)
+						window.requestAnimationFrame = function(callback, element) {
+							var currTime = new Date().getTime();
+							var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+							var id = window.setTimeout(function() { callback(currTime + timeToCall); }, 
+							  timeToCall);
+							lastTime = currTime + timeToCall;
+							return id;
+						};
+
+					if (!window.cancelAnimationFrame)
+						window.cancelAnimationFrame = function(id) {
+							clearTimeout(id);
+						};
+				}());
+
+				initialize();
+
+			})();
+
+
+		</script>
+
+		<script src="http://hakim.se/assets/promoter/promoter.js"></script>
+
+		<!-- Third party -->
+
+		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="http://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+		<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-15240703-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+		</script>
+
+	</body>
+</html>
