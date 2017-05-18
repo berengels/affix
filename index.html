@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<meta name="title" content="Affix" />
+
 		<meta name="description" content="Strategy agency ||| Culture | Technology | Innovation" />
 
 		<meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -19,11 +19,34 @@
 
 			html, body {
 				height: 100%;
-    			background: red; /* For browsers that do not support gradients */
-   	 			background: -webkit-linear-gradient(red, yellow); /* For Safari 5.1 to 6.0 */
-    			background: -o-linear-gradient(blue, purple); /* For Opera 11.1 to 12.0 */
-    			background: -moz-linear-gradient(blue, purple); /* For Firefox 3.6 to 15 */
-    			background: linear-gradient(blue, purple); /* Standard syntax */
+    			background: linear-gradient(88deg, #ff512f, #dd2476, #e55d87, #5fc3e4, #56b4d3, #56b4d3, #348f50, #348f50, #02aab0, #00cdac, #ff512f);
+				background-size: 2200% 2200%;
+
+				-webkit-animation: Affinimator 55s ease infinite;
+				-moz-animation: Affinimator 55s ease infinite;
+				-o-animation: Affinimator 55s ease infinite;
+				animation: Affinimator 55s ease infinite;
+			}
+
+			@-webkit-keyframes Affinimator {
+			    0%{background-position:0% 50%}
+			    50%{background-position:100% 50%}
+			    100%{background-position:0% 50%}
+			}
+			@-moz-keyframes Affinimator {
+			    0%{background-position:0% 50%}
+			    50%{background-position:100% 50%}
+			    100%{background-position:0% 50%}
+			}
+			@-o-keyframes Affinimator {
+			    0%{background-position:0% 50%}
+			    50%{background-position:100% 50%}
+			    100%{background-position:0% 50%}
+			}
+			@keyframes Affinimator { 
+			    0%{background-position:0% 50%}
+			    50%{background-position:100% 50%}
+			    100%{background-position:0% 50%}
 			}
 
 			.main-container {
@@ -74,7 +97,7 @@
 <center><div class="Title">Affix Agency</div></center>
 
 <center><div class="panel">
-A strategy agency <br> | Technology | Innovation | Culture | <br><br> Brokin' Agency is a subsidiary of Affix </div></center>
+A strategy agency <br> | Technology | Innovation | Culture <br><br> Brokin' Agency is a subsidiary of Affix </div></center>
 
 			<canvas></canvas>
 
@@ -248,10 +271,24 @@ A strategy agency <br> | Technology | Innovation | Culture | <br><br> Brokin' Ag
 
 
 		</script>
-		
+
 		<script src="http://hakim.se/assets/promoter/promoter.js"></script>
 
 		<!-- Third party -->
+
+		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="http://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+		<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-15240703-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+		</script>
 
 	</body>
 </html>
